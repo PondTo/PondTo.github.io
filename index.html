@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#140409" />
+<title>3 Years, One Love — Our Story</title>
+<meta name="description" content="A quiet corner of the internet, made for one person only." />
+
+<!-- ── Google Fonts ────────────────────────────────────────────────
+     Cormorant Garamond = ตัวอักษรหัวเรื่อง (serif หรูคมบาง)
+     Noto Serif Thai    = ตัวอักษรภาษาไทย (เข้าชุดกับ Cormorant)
+     Inter              = ตัวอักษร label / ตัวเล็ก / UI
+──────────────────────────────────────────────────────────────── -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500&family=Noto+Serif+Thai:wght@200;300;400;500&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="style.css" />
+
+<!-- ถ้าเบราว์เซอร์ปิด JavaScript ไว้ ยังอ่านเนื้อหาได้ครบ -->
+<noscript>
+  <style>
+    body { overflow: auto !important; height: auto !important; }
+    .opening, .scroll-progress, .dotnav { display: none !important; }
+    .reveal, .tile, .card, .fut { opacity: 1 !important; transform: none !important; }
+  </style>
+</noscript>
+</head>
+
+<body class="is-locked">
+
+<!-- ══════════════════════════════════════════════════════════════
+     LAYER: บรรยากาศพื้นหลัง (grain / glow / หัวใจลอย)
+     ทั้งหมดเป็น decorative → aria-hidden
+══════════════════════════════════════════════════════════════ -->
+<div class="atmos" aria-hidden="true">
+  <div class="atmos__glow atmos__glow--a"></div>
+  <div class="atmos__glow atmos__glow--b"></div>
+  <div class="atmos__glow atmos__glow--c"></div>
+  <div class="atmos__grain"></div>
+  <div class="atmos__hearts" id="ambientHearts"></div>
+</div>
+
+<!-- แถบแสดงความคืบหน้าการเลื่อนหน้า -->
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     SECTION 1 — OPENING / SURPRISE (overlay เต็มจอ)
+══════════════════════════════════════════════════════════════ -->
+<div class="opening" id="opening">
+  <div class="opening__vignette" aria-hidden="true"></div>
+
+  <div class="opening__inner">
+    <span class="eyebrow eyebrow--center">for you · only you</span>
+
+    <h1 class="opening__title">
+      Something special
+      <em>is waiting for you</em>
+    </h1>
+
+    <p class="opening__note">มีบางอย่างรออยู่ข้างใน — ค่อย ๆ เปิดนะ</p>
+
+    <button class="seal-btn" id="openBtn" type="button">
+      <span class="seal-btn__ring" aria-hidden="true"></span>
+      <span class="seal-btn__label">Open My Heart</span>
+      <span class="seal-btn__heart" aria-hidden="true">&#10084;</span>
+    </button>
+  </div>
+
+  <!-- แสงระเบิดตอนกดปุ่ม -->
+  <div class="burst" id="burst" aria-hidden="true"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     NAV จุดเล็ก ๆ ด้านขวา (เฉพาะจอใหญ่)
+══════════════════════════════════════════════════════════════ -->
+<nav class="dotnav" id="dotnav" aria-label="ไปยังส่วนต่าง ๆ">
+  <a href="#hero"    data-label="Anniversary"><span></span></a>
+  <a href="#gallery" data-label="Memories"><span></span></a>
+  <a href="#reasons" data-label="You"><span></span></a>
+  <a href="#song"    data-label="Our Song"><span></span></a>
+  <a href="#letter"  data-label="The Letter"><span></span></a>
+  <a href="#future"  data-label="Future"><span></span></a>
+  <a href="#finale"  data-label="Forever"><span></span></a>
+</nav>
+
+<main id="main">
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 2 — HERO
+  ══════════════════════════════════════════════════════════ -->
+  <section class="section hero" id="hero">
+    <div class="wrap wrap--narrow hero__inner">
+
+      <p class="hero__to reveal" data-reveal>
+        <span class="hero__to-label">To</span>
+        <span class="hero__to-name" id="partnerNameHero">[PARTNER_NAME]</span>
+      </p>
+
+      <h2 class="hero__title reveal" data-reveal data-delay="1">
+        Happy <span class="hero__ord">3rd</span>
+        <em>Anniversary</em>
+      </h2>
+
+      <div class="rule reveal" data-reveal data-delay="2" aria-hidden="true">
+        <span class="rule__line"></span>
+        <span class="rule__mark">&#10022;</span>
+        <span class="rule__line"></span>
+      </div>
+
+      <p class="hero__verse reveal" data-reveal data-delay="3">
+        3 years.<br />
+        Countless memories.<br />
+        <em>One person I still choose every day.</em>
+      </p>
+
+      <p class="hero__since reveal" data-reveal data-delay="4">
+        since <span id="startDateLabel">[START_DATE]</span>
+      </p>
+
+      <!-- ── LIVE COUNTER ── -->
+      <div class="counter reveal" data-reveal data-delay="5">
+        <p class="counter__caption">Together for</p>
+        <div class="counter__grid" id="counter" role="timer" aria-live="off">
+          <div class="unit"><span class="unit__num" id="cDays">000</span><span class="unit__label">days</span></div>
+          <div class="unit"><span class="unit__num" id="cHours">00</span><span class="unit__label">hours</span></div>
+          <div class="unit"><span class="unit__num" id="cMins">00</span><span class="unit__label">minutes</span></div>
+          <div class="unit"><span class="unit__num" id="cSecs">00</span><span class="unit__label">seconds</span></div>
+        </div>
+        <p class="counter__foot" id="counterFoot">และยังนับต่อไปเรื่อย ๆ</p>
+      </div>
+
+      <a class="scroll-hint reveal" data-reveal data-delay="6" href="#gallery">
+        <span>scroll</span>
+        <span class="scroll-hint__line" aria-hidden="true"></span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 3 — MEMORY GALLERY
+  ══════════════════════════════════════════════════════════ -->
+  <section class="section section--pad" id="gallery">
+    <div class="wrap">
+      <header class="head reveal" data-reveal>
+        <span class="eyebrow">the collection</span>
+        <h2 class="head__title">Little Moments,<br /><em>Big Memories</em></h2>
+        <p class="head__sub">แตะที่รูปเพื่อดูภาพใหญ่</p>
+      </header>
+
+      <!-- Gallery ถูกสร้างจาก array `gallery` ใน script.js -->
+      <div class="bento" id="bento"></div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 4 — THINGS I LOVE ABOUT YOU
+  ══════════════════════════════════════════════════════════ -->
+  <section class="section section--pad" id="reasons">
+    <div class="wrap">
+      <header class="head reveal" data-reveal>
+        <span class="eyebrow">a short list of a long feeling</span>
+        <h2 class="head__title">Things I Love<br /><em>About You</em></h2>
+      </header>
+
+      <!-- Cards ถูกสร้างจาก array `thingsILove` ใน script.js -->
+      <div class="cards" id="cards"></div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 5 — OUR SONG
+  ══════════════════════════════════════════════════════════ -->
+  <section class="section section--pad" id="song">
+    <div class="wrap wrap--narrow">
+      <header class="head reveal" data-reveal>
+        <span class="eyebrow">side a · track 01</span>
+        <h2 class="head__title">Our Song</h2>
+      </header>
+
+      <div class="player reveal" data-reveal data-delay="1" id="player">
+        <div class="player__disc" id="disc" aria-hidden="true">
+          <span class="player__disc-ring"></span>
+          <span class="player__disc-core">&#9834;</span>
+        </div>
+
+        <div class="player__body">
+          <p class="player__title" id="songTitle">[SONG_TITLE]</p>
+          <p class="player__artist" id="songArtist">[ARTIST]</p>
+
+          <div class="player__bar" id="seek" role="slider" tabindex="0"
+               aria-label="ตำแหน่งเพลง" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <span class="player__fill" id="seekFill"></span>
+            <span class="player__knob" id="seekKnob"></span>
+          </div>
+
+          <div class="player__times">
+            <span id="timeNow">0:00</span>
+            <span id="timeAll">0:00</span>
+          </div>
+
+          <div class="player__controls">
+            <button class="play-btn" id="playBtn" type="button" aria-label="เล่นเพลง">
+              <span class="play-btn__icon" id="playIcon" aria-hidden="true"></span>
+              <span class="play-btn__text" id="playText">Play Our Song</span>
+            </button>
+
+            <div class="volume">
+              <span class="volume__icon" aria-hidden="true">&#9835;</span>
+              <input class="volume__range" id="volume" type="range" min="0" max="100" value="80"
+                     aria-label="ระดับเสียง" />
+            </div>
+          </div>
+
+          <p class="player__hint" id="playerHint" hidden>
+            ยังไม่พบไฟล์เพลง — วางไฟล์ไว้ที่ <code>assets/music/our-song.mp3</code> แล้วรีเฟรชอีกครั้ง
+          </p>
+        </div>
+
+        <!-- src ถูกกำหนดจาก CONFIG ใน script.js -->
+        <audio id="audio" preload="metadata"></audio>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 6 — LOVE LETTER
+  ══════════════════════════════════════════════════════════ -->
+  <section class="section section--pad" id="letter">
+    <div class="wrap wrap--narrow">
+      <header class="head reveal" data-reveal>
+        <span class="eyebrow">sealed &middot; for your eyes</span>
+        <h2 class="head__title">A Letter<br /><em>To You</em></h2>
+      </header>
+
+      <div class="letter-stage reveal" data-reveal data-delay="1" id="letterStage">
+
+        <!-- ซองจดหมาย -->
+        <div class="envelope" id="envelope">
+          <div class="envelope__flap"></div>
+          <div class="envelope__pocket"></div>
+          <div class="envelope__paper" aria-hidden="true"></div>
+          <div class="envelope__front">
+            <span class="envelope__to" id="envelopeTo">To [PARTNER_NAME]</span>
+          </div>
+
+          <button class="wax" id="letterBtn" type="button">
+            <span class="wax__seal" aria-hidden="true">
+              <span class="wax__initial" id="waxInitial">&#10084;</span>
+            </span>
+            <span class="wax__label">Open Letter</span>
+          </button>
+        </div>
+
+        <!-- แผ่นจดหมาย (แสดงหลังกดเปิดซอง) -->
+        <article class="paper" id="paper" hidden>
+          <div class="paper__edge" aria-hidden="true"></div>
+          <div class="paper__inner">
+            <p class="paper__salute" id="paperSalute">ถึง [PARTNER_NAME]</p>
+            <div class="paper__body" id="paperBody"><!-- ข้อความจาก CONFIG.letter --></div>
+            <p class="paper__sign" id="paperSign">รักนะ</p>
+            <p class="paper__from" id="paperFrom">— [YOUR_NAME]</p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 7 — OUR FUTURE
+  ══════════════════════════════════════════════════════════ -->
+  <section class="section section--pad future" id="future">
+    <div class="stars" id="stars" aria-hidden="true"></div>
+
+    <div class="wrap wrap--narrow future__inner">
+      <header class="head reveal" data-reveal>
+        <span class="eyebrow">what comes next</span>
+        <h2 class="head__title">To Be<br /><em>Continued&hellip;</em></h2>
+      </header>
+
+      <p class="future__line reveal" data-reveal data-delay="1">
+        3 years is only the beginning.
+      </p>
+
+      <!-- ข้อความอนาคตถูกสร้างจาก array `future` ใน script.js -->
+      <div class="future__list" id="futureList"></div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 8 — FINAL SURPRISE
+  ══════════════════════════════════════════════════════════ -->
+  <section class="section finale" id="finale">
+    <canvas class="finale__canvas" id="heartCanvas" aria-hidden="true"></canvas>
+
+    <div class="finale__inner">
+      <p class="finale__line finale__line--1">3 Years Down&hellip;</p>
+      <p class="finale__line finale__line--2">And I Still <em>Choose You.</em></p>
+
+      <div class="finale__seal">
+        <h2 class="finale__title">Happy 3rd Anniversary</h2>
+        <p class="finale__name" id="partnerNameFinale">[PARTNER_NAME]</p>
+      </div>
+
+      <p class="finale__line finale__line--3">Let's make many more memories together.</p>
+
+      <button class="again" id="againBtn" type="button">
+        <span>อ่านอีกครั้ง</span>
+      </button>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <span class="foot__mark" aria-hidden="true">&#10084;</span>
+  <p>Made by hand, for <span id="partnerNameFoot">[PARTNER_NAME]</span> &middot; <span id="footYear">2026</span></p>
+</footer>
+
+<!-- ══════════════════════════════════════════════════════════════
+     LIGHTBOX (แกลเลอรี)
+══════════════════════════════════════════════════════════════ -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="ภาพความทรงจำ" hidden>
+  <button class="lb-close" id="lbClose" type="button" aria-label="ปิด">&times;</button>
+  <button class="lb-nav lb-nav--prev" id="lbPrev" type="button" aria-label="ภาพก่อนหน้า">&#8249;</button>
+  <button class="lb-nav lb-nav--next" id="lbNext" type="button" aria-label="ภาพถัดไป">&#8250;</button>
+
+  <figure class="lb-figure" id="lbFigure">
+    <div class="lb-imgwrap">
+      <img class="lb-img" id="lbImg" src="" alt="" />
+      <div class="lb-empty" id="lbEmpty" hidden>
+        <span>&#10084;</span>
+        <p id="lbEmptyPath">assets/images/</p>
+      </div>
+    </div>
+    <figcaption class="lb-cap">
+      <span class="lb-cap__text" id="lbCaption"></span>
+      <span class="lb-cap__count" id="lbCount"></span>
+    </figcaption>
+  </figure>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
